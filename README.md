@@ -1,5 +1,5 @@
 # chrt-set
-Group and Stack components of Chrt
+Group and Stack components of Chrt to be used to create stacked bars and area charts, or grouped bars.
 
 **WORK IN PROGRESS** Please come back in few months after we will announce the first beta version. For more info mail to sayhi@chrt.io
 
