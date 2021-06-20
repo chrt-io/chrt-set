@@ -1,7 +1,7 @@
-import { isNull } from '~/helpers';
+import { uuid } from '~/helpers';
 
 describe('Testing misc functions', () => {
-  test('null is null', () => {
-    expect(isNull(null)).toBe(true);
+  test('Test uuid returns a string', () => {
+    expect(typeof uuid()).toBe('string');
   });
 });
