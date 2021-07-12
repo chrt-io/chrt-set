@@ -1,6 +1,6 @@
 {
   "name": "chrt-set",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Group and Stack components of Chrt",
   "main": "dist/chrt-set.js",
   "module": "dist/chrt-set.esm.js",
