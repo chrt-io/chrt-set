@@ -34,7 +34,7 @@ function chrtStack() {
 
     const dataFunction = chart.data;
     chart.data = (data, accessor) => {
-      // console.log('chrtStack','data!', this._dataMap)
+      //console.log('chrtStack','data!', this._dataMap)
       if(!isNull(data)) {
           data = data.map(d => {
             if(!this._dataMap.x[d.x]) {
@@ -45,7 +45,14 @@ function chrtStack() {
             }
             this._dataMap.x[d.x].values.push(d);
             const y0 = !isNull(this._dataMap.x[d.x].y0) ? this._dataMap.x[d.x].y0 : null;
-            this._dataMap.x[d.x].y0 = this._orientation !== 'bottom' ? null : (y0 || 0) + d.y;
+            const y0_neg = !isNull(this._dataMap.x[d.x].y0_neg) ? this._dataMap.x[d.x].y0_neg : null;
+
+            if(d.y >= 0) {
+              this._dataMap.x[d.x].y0 = this._orientation !== 'bottom' ? null : (y0 || 0) + d.y;
+            } else {
+              this._dataMap.x[d.x].y0_neg = this._orientation !== 'bottom' ? null : (y0_neg || 0) + d.y;
+            }
+
 
             if(!this._dataMap.y[d.y]) {
               this._dataMap.y[d.y] = {
@@ -55,18 +62,28 @@ function chrtStack() {
             }
             this._dataMap.y[d.y].values.push(d);
             const x0 = !isNull(this._dataMap.y[d.y].x0) ? this._dataMap.y[d.y].x0 : null;
-            this._dataMap.y[d.y].x0 = this._orientation !== 'left' ? null : (x0 || 0) + d.x;
+            const x0_neg = !isNull(this._dataMap.y[d.y].x0_neg) ? this._dataMap.y[d.y].x0_neg : null;
+
+            if(d.x >= 0) {
+              this._dataMap.y[d.y].x0 = this._orientation !== 'left' ? null : (x0 || 0) + d.x;
+            } else {
+              this._dataMap.y[d.y].x0_neg = this._orientation !== 'left' ? null : (x0_neg || 0) + d.x;
+            }
 
 
+            //console.log('stacked_y',y0,'+',d.y,'=',(y0 || 0) + d.y)
 
-            return Object.assign({}, d, { stacked_y: (y0 || 0) + d.y, y0, stacked_x: (x0 || 0) + d.x, x0})
+            return Object.assign({}, d, {
+              stacked_y: (d.y >= 0 ? y0 : y0_neg || 0) + d.y,
+              y0: d.y >= 0 ? y0 : y0_neg,
+              stacked_x: ((d.x >= 0 ? x0 : x0_neg) || 0) + d.x,
+              x0: d.x >= 0 ? x0 : x0_neg,
+            })
           })
       }
       // console.log('CALLING DATA ON',chart,'WITH', data)
       return dataFunction.call(chart, data, accessor);
     }
-
-
 
     return this;
   }

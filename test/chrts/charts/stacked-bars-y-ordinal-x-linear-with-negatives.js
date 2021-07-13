@@ -1,5 +1,5 @@
 import * as chrt from 'chrt';
-import chrtGroup from '~/charts/chrtGroup'
+import chrtStack from '~/charts/chrtStack'
 
 const data = [
   {
@@ -30,18 +30,17 @@ export default async function(container) {
     .add(chrt.xAxis().hideAxis())
     .add(chrt.yAxis().zero(0))
     .add(
-      chrtGroup()
-        .width(0.5)
-        //.orientation('left')
+      chrtStack()
+        .orientation('left')
         .add(
           chrt.chrtBars()
             .data(data, d => ({
               x: d.x,
               y: d.y,
             }))
-            .width(1)
+            .width(0.5)
             .stroke('#333')
-            .strokeWidth(2)
+            .strokeWidth(1)
             .strokeOpacity(0.8)
             .fill('#f00')
             .fillOpacity(0.5)
@@ -52,9 +51,9 @@ export default async function(container) {
               x: d.x,
               y: d.y,
             }))
-            .width(1)
+            .width(0.5)
             .stroke('#333')
-            .strokeWidth(2)
+            .strokeWidth(1)
             .strokeOpacity(0.8)
             .fill('#0f0')
             .fillOpacity(0.5)
@@ -65,11 +64,24 @@ export default async function(container) {
               x: -d.x,
               y: d.y,
             }))
-            .width(1)
+            .width(0.5)
             .stroke('#333')
-            .strokeWidth(2)
+            .strokeWidth(1)
             .strokeOpacity(0.8)
             .fill('#00f')
+            .fillOpacity(0.5)
+        )
+        .add(
+          chrt.chrtBars()
+            .data(data, d => ({
+              x: -d.x/2,
+              y: d.y,
+            }))
+            .width(0.5)
+            .stroke('#333')
+            .strokeWidth(1)
+            .strokeOpacity(0.8)
+            .fill('#0ff')
             .fillOpacity(0.5)
         )
     );

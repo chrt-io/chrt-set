@@ -12,7 +12,7 @@ const data = [
   },
   {
     x: 'c',
-    y: -14
+    y: 14
   },
   {
     x: 'd',
@@ -25,7 +25,7 @@ export default async function(container) {
     .node(container)
     .size(600, 200)
     .x({scale:'ordinal'})
-    .y({domain:[0,null], scale:'linear'})
+    //.y({domain:[0,null], scale:'linear'})
     // .y({domain:[1,10000], scale:'log'})
     .add(chrt.xAxis().zero(0))
     .add(chrt.yAxis(5))
@@ -53,10 +53,19 @@ export default async function(container) {
           chrt.chrtColumns()
             .data(data, d => ({
               x: d.x,
-              y: d.y,
+              y: -d.y,
             }))
             .width(0.5)
             .fill('#00f')
+        )
+        .add(
+          chrt.chrtColumns()
+            .data(data, d => ({
+              x: d.x,
+              y: -d.y,
+            }))
+            .width(0.5)
+            .fill('#0ff')
         )
     );
 }

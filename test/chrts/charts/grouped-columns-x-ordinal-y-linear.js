@@ -27,7 +27,7 @@ export default async function(container) {
     .x({scale:'ordinal'})
     .y({domain:[0,null], scale:'linear'})
     // .y({domain:[1,10000], scale:'log'})
-    .add(chrt.xAxis())
+    .add(chrt.xAxis().zero(0))
     .add(chrt.yAxis())
     .add(
       chrtGroup()
@@ -54,7 +54,7 @@ export default async function(container) {
           chrt.chrtColumns()
             .data(data, d => ({
               x: d.x,
-              y: d.y,
+              y: -d.y,
             }))
             .width(0.9)
             .fill('#00f')
