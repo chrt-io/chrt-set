@@ -70,15 +70,17 @@ function chrtStack() {
               this._dataMap.y[d.y].x0_neg = this._orientation !== 'left' ? null : (x0_neg || 0) + d.x;
             }
 
-
-            //console.log('stacked_y',y0,'+',d.y,'=',(y0 || 0) + d.y)
-
-            return Object.assign({}, d, {
-              stacked_y: (d.y >= 0 ? y0 : y0_neg || 0) + d.y,
+            // check if d.y is a number, if not then most probably it's a
+            // ordinal scale, to avoid odd chaining of numbers and string
+            // chrt doesn't add them but keeps only d.y
+            const valueWithStack = Object.assign({}, d, {
+              stacked_y: isNaN(d.y) ? d.y : (d.y >= 0 ? y0 : y0_neg || 0) + d.y,
               y0: d.y >= 0 ? y0 : y0_neg,
-              stacked_x: ((d.x >= 0 ? x0 : x0_neg) || 0) + d.x,
+              stacked_x: isNaN(d.x) ? d.x : ((d.x >= 0 ? x0 : x0_neg) || 0) + d.x,
               x0: d.x >= 0 ? x0 : x0_neg,
-            })
+            });
+
+            return valueWithStack;
           })
       }
       // console.log('CALLING DATA ON',chart,'WITH', data)
