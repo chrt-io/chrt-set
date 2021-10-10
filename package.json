@@ -1,6 +1,6 @@
 {
   "name": "chrt-set",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Group and Stack components of Chrt",
   "type": "module",
   "main": "src/index.js",
