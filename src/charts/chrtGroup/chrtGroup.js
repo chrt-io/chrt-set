@@ -1,11 +1,9 @@
-import chrtGeneric from 'chrt-object';
 import { isNull } from '~/helpers';
 import { add } from '../util';
+import chrtObject from 'chrt-object';
 
 function chrtGroup() {
-  //console.log('chrtGroup')
-
-  chrtGeneric.call(this);
+  chrtObject.call(this);
   this.type = 'group';
   this.attr('width', 1);
 
@@ -45,9 +43,9 @@ function chrtGroup() {
   }
 }
 
-chrtGroup.prototype = Object.create(chrtGeneric.prototype);
+chrtGroup.prototype = Object.create(chrtObject.prototype);
 chrtGroup.prototype.constructor = chrtGroup;
-chrtGroup.parent = chrtGeneric.prototype;
+chrtGroup.parent = chrtObject.prototype;
 
 chrtGroup.prototype = Object.assign(chrtGroup.prototype, {
 
