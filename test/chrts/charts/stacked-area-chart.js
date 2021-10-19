@@ -1,5 +1,5 @@
 import * as chrt from 'chrt';
-import {chrtLine} from 'chrt-line'
+import {chrtStack} from '../../../src/'
 
 const data = [
   {
@@ -30,9 +30,9 @@ export default async function(container) {
     .add(chrt.xAxis())
     .add(chrt.yAxis())
     .add(
-      chrt.chrtStack()
+      chrtStack()
         .add(
-          chrtLine()
+          chrt.chrtLine()
             .data(data, d => ({
               x: d.x,
               y: d.y,
@@ -45,7 +45,7 @@ export default async function(container) {
             .fillOpacity(0.5)
         )
         .add(
-          chrtLine()
+          chrt.chrtLine()
             .data(data, d => ({
               x: d.x,
               y: d.y,
@@ -59,7 +59,7 @@ export default async function(container) {
             .fillOpacity(0.5)
         )
         .add(
-          chrtLine()
+          chrt.chrtLine()
             .data(data, d => ({
               x: d.x,
               y: d.y,

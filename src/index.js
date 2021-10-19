@@ -1,2 +1,2 @@
-export { default as chrtStack } from './charts/chrtStack';
-export { default as chrtGroup } from './charts/chrtGroup';
+export { default as chrtStack } from './chrtStack';
+export { default as chrtGroup } from './chrtGroup';

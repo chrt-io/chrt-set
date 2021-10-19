@@ -18,7 +18,7 @@
 // });
 
 import * as chrt from 'chrt';
-import chrtStack from '~/charts/chrtStack'
+import {chrtStack} from '~/'
 
 describe('Testing chrtStack', () => {
   it('Testing orientation getter', () => {

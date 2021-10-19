@@ -1,5 +1,5 @@
 import chrtGeneric from 'chrt-object';
-import { isNull } from '~/helpers';
+import { isNull } from '../helpers';
 import { add } from '../util';
 
 function chrtStack() {

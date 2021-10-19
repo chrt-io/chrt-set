@@ -1,4 +1,4 @@
-import { isNull } from '~/helpers';
+import { isNull } from '../helpers';
 import { add } from '../util';
 import chrtObject from 'chrt-object';
 

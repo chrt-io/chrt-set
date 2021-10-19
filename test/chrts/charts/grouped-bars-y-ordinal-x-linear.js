@@ -1,5 +1,5 @@
 import * as chrt from 'chrt';
-import chrtGroup from '~/charts/chrtGroup'
+import {chrtGroup} from '../../../src/'
 
 const data = [
   {
