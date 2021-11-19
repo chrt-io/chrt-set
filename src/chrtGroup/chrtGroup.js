@@ -1,6 +1,5 @@
-import { isNull } from '../helpers';
-import { add } from '../util';
-import chrtObject from 'chrt-object';
+import chrtObject, { utils } from 'chrt-object';
+const { isNull, add } = utils;
 
 function chrtGroup() {
   chrtObject.call(this);

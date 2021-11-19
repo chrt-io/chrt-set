@@ -1,11 +1,10 @@
-import chrtGeneric from 'chrt-object';
-import { isNull } from '../helpers';
-import { add } from '../util';
+import chrtObject, { utils } from 'chrt-object';
+const { isNull, add } = utils;
 
 function chrtStack() {
   //console.log('chrtStack')
 
-  chrtGeneric.call(this);
+  chrtObject.call(this);
   this.type = 'stack';
   this._grouped = 1;
   this._groupIndex = 0;
@@ -106,9 +105,9 @@ function chrtStack() {
   }
 }
 
-chrtStack.prototype = Object.create(chrtGeneric.prototype);
+chrtStack.prototype = Object.create(chrtObject.prototype);
 chrtStack.prototype.constructor = chrtStack;
-chrtStack.parent = chrtGeneric.prototype;
+chrtStack.parent = chrtObject.prototype;
 
 chrtStack.prototype = Object.assign(chrtStack.prototype, {
 
