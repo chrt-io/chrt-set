@@ -1,4 +1,4 @@
-import chrtObject, { utils } from 'chrt-object';
+import chrtObject, { utils, cssDisplay} from 'chrt-object';
 const { isNull, add } = utils;
 
 function chrtStack() {
@@ -14,6 +14,8 @@ function chrtStack() {
     x: {},
     y: {},
   };
+
+  this._classNames = ['chrt-stack'];
 
   this.orientation = (orientation) => {
     if(isNull(orientation)) {
@@ -89,6 +91,8 @@ function chrtStack() {
     return this;
   }
 
+  this.snap = this.add;
+
   this.draw = () => {
     // console.log('chrtStack', 'draw', this.objects);
     const parentNode = this.parentNode.type === 'group' ? this.parentNode.parentNode : this.parentNode;
@@ -99,9 +103,14 @@ function chrtStack() {
       // console.log('--->', obj)
     })
 
+    cssDisplay.call(this, this.attr('display')());
+
+    this.g.classList.remove(...this.g.classList)
+    this.g.classList.add(...this._classNames);
+
     this.objects.forEach(obj => obj.draw())
 
-    return parentNode;
+    return this;
   }
 }
 
@@ -110,7 +119,6 @@ chrtStack.prototype.constructor = chrtStack;
 chrtStack.parent = chrtObject.prototype;
 
 chrtStack.prototype = Object.assign(chrtStack.prototype, {
-
 });
 
 export default function() {

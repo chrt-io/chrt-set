@@ -32,6 +32,7 @@ export default async function(container) {
     .add(
       chrtGroup()
         .width(0.5)
+        .class('test')
         .add(
           chrt.chrtColumns()
             .data(data, d => ({

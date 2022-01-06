@@ -32,6 +32,7 @@ export default async function(container) {
     .add(
       chrtStack()
         .orientation('left')
+        .class('test')
         .add(
           chrt.chrtBars()
             .data(data, d => ({

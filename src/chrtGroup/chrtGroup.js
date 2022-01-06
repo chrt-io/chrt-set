@@ -1,10 +1,12 @@
-import chrtObject, { utils } from 'chrt-object';
+import chrtObject, { utils, cssDisplay } from 'chrt-object';
 const { isNull, add } = utils;
 
 function chrtGroup() {
   chrtObject.call(this);
   this.type = 'group';
   this.attr('width', 1);
+
+  this._classNames = ['chrt-group'];
 
   this.width = (width) => {
     if(isNull(width)) {
@@ -28,6 +30,8 @@ function chrtGroup() {
     return this;
   }
 
+  this.snap = this.add;
+
   this.draw = () => {
     this.objects.forEach(obj => {
       if(this.parentNode.objects.map(d => d._id).indexOf(obj._id) === -1) {
@@ -38,7 +42,11 @@ function chrtGroup() {
 
     this.objects.forEach(obj => obj.draw())
 
-    return this.parentNode;
+    cssDisplay.call(this, this.attr('display')());
+    this.g.classList.remove(...this.g.classList)
+    this.g.classList.add(...this._classNames);
+
+    return this;
   }
 }
 
@@ -47,7 +55,7 @@ chrtGroup.prototype.constructor = chrtGroup;
 chrtGroup.parent = chrtObject.prototype;
 
 chrtGroup.prototype = Object.assign(chrtGroup.prototype, {
-
+  snap: add,
 });
 
 export default function() {
