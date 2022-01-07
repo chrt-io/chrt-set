@@ -10,6 +10,9 @@ const YEAR = new Date().getFullYear();
 
 const config = {
   input: 'src/index.js',
+  external: Object.keys(meta.dependencies || {}).filter(key =>
+    /^chrt-/.test(key)
+  ),
   output: {
     file: `dist/${meta.name}.js`,
     name: 'chrt',
@@ -20,7 +23,13 @@ const config = {
     exports: 'named',
     banner: `// ${meta.name} v${meta.version} Copyright ${
       YEAR !== STARTED ? `${STARTED}-` : ''
-    }${YEAR} ${meta.author} ${meta.homepage}`
+    }${YEAR} ${meta.author} ${meta.homepage}`,
+    globals: Object.assign(
+      {},
+      ...Object.keys(meta.dependencies || {})
+        .filter(key => /^chrt-/.test(key))
+        .map(key => ({ [key]: 'chrt' }))
+    )
   },
   plugins: [
     commonjs(),
