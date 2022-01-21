@@ -38,51 +38,54 @@ function chrtStack() {
       //console.log('chrtStack','data!', this._dataMap)
       if(!isNull(data)) {
           data = data.map(d => {
-            if(!this._dataMap.x[d.x]) {
-              this._dataMap.x[d.x] = {
-                x: d.x,
+            const x = d.x ?? d.x0;
+            const y = d.y ?? d.y0;
+
+            if(!this._dataMap.x[x]) {
+              this._dataMap.x[x] = {
+                x,
                 values: [],
               }
             }
-            this._dataMap.x[d.x].values.push(d);
-            const y0 = !isNull(this._dataMap.x[d.x].y0) ? this._dataMap.x[d.x].y0 : null;
-            const y0_neg = !isNull(this._dataMap.x[d.x].y0_neg) ? this._dataMap.x[d.x].y0_neg : null;
+            this._dataMap.x[x].values.push(d);
+            const y0 = !isNull(this._dataMap.x[x].y0) ? this._dataMap.x[x].y0 : null;
+            const y0_neg = !isNull(this._dataMap.x[x].y0_neg) ? this._dataMap.x[x].y0_neg : null;
 
             if(d.y >= 0) {
-              this._dataMap.x[d.x].y0 = this._orientation !== 'bottom' ? null : (y0 || 0) + d.y;
+              this._dataMap.x[x].y0 = this._orientation !== 'bottom' ? null : (y0 || 0) + y;
             } else {
-              this._dataMap.x[d.x].y0_neg = this._orientation !== 'bottom' ? null : (y0_neg || 0) + d.y;
+              this._dataMap.x[x].y0_neg = this._orientation !== 'bottom' ? null : (y0_neg || 0) + y;
             }
 
-
-            if(!this._dataMap.y[d.y]) {
-              this._dataMap.y[d.y] = {
-                y: d.y,
+            if(!this._dataMap.y[y]) {
+              this._dataMap.y[y] = {
+                y,
                 values: [],
               }
             }
-            this._dataMap.y[d.y].values.push(d);
-            const x0 = !isNull(this._dataMap.y[d.y].x0) ? this._dataMap.y[d.y].x0 : null;
-            const x0_neg = !isNull(this._dataMap.y[d.y].x0_neg) ? this._dataMap.y[d.y].x0_neg : null;
+            this._dataMap.y[y].values.push(d);
+            const x0 = !isNull(this._dataMap.y[y].x0) ? this._dataMap.y[y].x0 : null;
+            const x0_neg = !isNull(this._dataMap.y[y].x0_neg) ? this._dataMap.y[y].x0_neg : null;
 
             if(d.x >= 0) {
-              this._dataMap.y[d.y].x0 = this._orientation !== 'left' ? null : (x0 || 0) + d.x;
+              this._dataMap.y[y].x0 = this._orientation !== 'left' ? null : (x0 || 0) + x;
             } else {
-              this._dataMap.y[d.y].x0_neg = this._orientation !== 'left' ? null : (x0_neg || 0) + d.x;
+              this._dataMap.y[y].x0_neg = this._orientation !== 'left' ? null : (x0_neg || 0) + x;
             }
 
             // check if d.y is a number, if not then most probably it's a
             // ordinal scale, to avoid odd chaining of numbers and string
             // chrt doesn't add them but keeps only d.y
             const valueWithStack = Object.assign({}, d, {
-              stacked_y: isNaN(d.y) ? d.y : (d.y >= 0 ? y0 : y0_neg || 0) + d.y,
-              y0: d.y >= 0 ? y0 : y0_neg,
-              stacked_x: isNaN(d.x) ? d.x : ((d.x >= 0 ? x0 : x0_neg) || 0) + d.x,
-              x0: d.x >= 0 ? x0 : x0_neg,
+              stacked_y: isNaN(y) ? y : (y >= 0 ? y0 : y0_neg || 0) + y,
+              stacked_y0: y >= 0 ? y0 : y0_neg,
+              stacked_x: isNaN(x) ? x : ((x >= 0 ? x0 : x0_neg) || 0) + x,
+              stacked_x0: x >= 0 ? x0 : x0_neg,
             });
 
             return valueWithStack;
           })
+          // console.log(this._dataMap)
       }
       // console.log('CALLING DATA ON',chart,'WITH', data)
       return dataFunction.call(chart, data, accessor);
