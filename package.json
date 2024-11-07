@@ -43,12 +43,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/chrt/chrt-set.git"
+    "url": "git+ssh://git@github.com/chrt-io/chrt-set.git"
   },
   "author": "chrt",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/chrt/chrt-set/issues"
+    "url": "https://github.com/chrt-io/chrt-set/issues"
   },
   "homepage": "chrt.io",
   "dependencies": {
