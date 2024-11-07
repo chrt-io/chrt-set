@@ -1,75 +1,162 @@
 # chrt-set
-Group and Stack components of Chrt to be used to create stacked bars and area charts, or grouped bars.
 
-**WORK IN PROGRESS** Please come back in few months after we will announce the first beta version. For more info mail to sayhi@chrt.io
+Component for creating grouped and stacked visualizations in chrt. This module provides two main ways to combine multiple chart elements:
 
-## How to build
+- `chrtGroup`: Groups elements side by side (e.g., grouped bar charts)
+- `chrtStack`: Stacks elements on top of each other (e.g., stacked area charts)
 
-###  Install the dependencies
-```
-npm install
-```
+These components are essential for creating complex comparisons and showing part-to-whole relationships.
 
-###  Build the package
-```
-npm build
-```
-### Developing
-If you want to develop and see the changes reloaded live into another app you can use the watch script
-```
-npm run watch
-```
+### Observable Examples and Documentation:
 
-## Use it as a module
+- [Chrt Sets - Observable](https://observablehq.com/d/0f320339acb47e75?collection=@chrt/chrt)
+- [Introducing Chrt - Observable](https://observablehq.com/@chrt/introducing-chrt?collection=@chrt/chrt)
 
-### Method 1 - tgz package
+## Installing
 
-#### Use the tgz provided in the repository
-You can use the `chrt-VERSION.tgz` package. The following commands will expand the chrt module in the `node_modules` folder of your project. Ready to be used with the usual `import` command:
-```
-cp chrt-VERSION.tgz SOMEWHERE
-cd myproject
-npm install SOMEWHERE/chrt-VERSION.tgz
+For use with Webpack, Rollup, or other Node-based bundlers, `chrt-set` can be installed as a standalone module via a package manager such as Yarn or npm.
+
+```bash
+npm install chrt-set chrt-core
 ```
 
-#### Create a tgz npm package
-You can create a package for testing with
-```
-npm pack
-```
-This command will create a file called `chrt-VERSION.tgz` in the root folder of chrt.
+`chrt-set` can be used as part of the `chrt` package:
 
-### Method 2 - symlinked package
-
-####  Create a global node module
-```
-npm link
-```
-This creates `chrt` module inside your global `node_modules` so that you can import it with `import Chrt from 'chrt'`
-
-####  Use the module in a different app
-```
-npm link chrt
-```
-This will create a sym link to the module created in your global.
-
-## Use it in your code
-After having installed or sym-linked the node you can use it as usual
-```
-import Chrt, {chrtPoints, chrtLine} from 'chrt';
+```bash
+npm install chrt
 ```
 
+## Usage
 
+### ES6 / Bundlers (Webpack, Rollup, etc.)
 
-## Testing
+````js
+import Chrt from "chrt-core";
+import { chrtColumns } from "chrt-bars";
+import { chrtGroup, chrtStack } from "chrt-set";
 
-### Unit test with Jest
-Run `npm run test` to run all the tests on the code with Jest.
+// Create grouped columns
+Chrt().add(
+  chrtGroup()
+    .add(chrtColumns().data(data1))
+    .add(chrtColumns().data(data2)),
+);
+
+## API Reference
+
+### chrtGroup
+
+Groups multiple chart elements side by side, useful for comparing values across categories.
+
+#### Creation
+
+```js
+// Create a group
+chrtGroup().add(chrt.columns()).add(chrt.columns());
+````
+
+#### `.width([value])`
+
+Sets the relative width of the grouped elements. Value should be between 0 and 1.
+
+```js
+chrtGroup()
+  .width(0.8) // 80% of available space
+  .add(chrt.columns());
 ```
-npm run test
+
+#### `.add(chart)`
+
+Adds a chart element to the group. Elements are positioned side by side.
+
+```js
+chrtGroup()
+  .add(chrt.columns().fill("#ff0000"))
+  .add(chrt.columns().fill("#00ff00"));
 ```
 
-To run only one test:
+### chrtStack
+
+Stacks multiple chart elements on top of each other, useful for showing part-to-whole relationships.
+
+#### Creation
+
+```js
+// Create a stacked bar chart
+chrtStack().add(chrt.columns()).add(chrt.columns());
 ```
-npx jest test/scales/scaleLinear.test.js
+
+#### `.orientation([value])`
+
+Sets the stacking orientation. Available options:
+
+- `"bottom"` (default): Stack vertically from bottom
+- `"left"`: Stack horizontally from left
+
+```js
+// Stack bars from left to right
+chrtStack().orientation("left").add(chrt.bars());
+```
+
+#### `.add(chart)` / `.snap(chart)`
+
+Adds a chart element to the stack. Both methods are aliases.
+
+```js
+chrtStack()
+  .add(chrt.columns().fill("#ff0000"))
+  .snap(chrt.columns().fill("#00ff00"));
+```
+
+### Examples
+
+#### Grouped Column Chart
+
+```js
+Chrt().add(
+  chrtGroup()
+    .width(0.8)
+    .add(chrt.columns().data(data).fill("#ff0000"))
+    .add(chrt.columns().data(data).fill("#00ff00")),
+);
+```
+
+#### Stacked Area Chart
+
+```js
+Chrt().add(
+  chrtStack()
+    .add(chrt.line().data(data1).area().fill("#ff0000").fillOpacity(0.5))
+    .add(chrt.line().data(data2).area().fill("#00ff00").fillOpacity(0.5)),
+);
+```
+
+#### Stacked Bars with Negative Values
+
+```js
+Chrt().add(
+  chrtStack()
+    .orientation("left")
+    .add(chrt.bars().data(positiveData).fill("#00ff00"))
+    .add(chrt.bars().data(negativeData).fill("#ff0000")),
+);
+```
+
+#### Combined Grouping and Stacking
+
+```js
+Chrt().add(
+  chrtGroup()
+    .width(0.9)
+    .add(
+      chrtStack()
+        .add(chrt.columns().data(group1Data1))
+        .add(chrt.columns().data(group1Data2)),
+    )
+    .add(
+      chrtStack()
+        .add(chrt.columns().data(group2Data1))
+        .add(chrt.columns().data(group2Data2)),
+    ),
+);
 ```
